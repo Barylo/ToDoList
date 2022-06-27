@@ -17,7 +17,12 @@ function ToDoItem(props) {
         style={{ textDecoration: isMarked ? "line-through" : "none" }}
       >
         {props.text}{" "}
-        <button className="btn" onClick={() => props.handleEdit(props.id)}>
+        <button
+          className="btn"
+          onClick={() => {
+            props.onEdit(props.id);
+          }}
+        >
           Edit
         </button>{" "}
         <button

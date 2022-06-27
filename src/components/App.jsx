@@ -44,7 +44,11 @@ function App() {
 
   function handleEdit(id) {
     event.preventDefault();
-    setEditId(editId);
+    // setItems((prevItems) => {
+    //   return prevItems.find((item, index) => {
+    //     return item.index === id;
+    //   });
+    // });
   }
 
   return (
