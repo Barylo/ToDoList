@@ -44,11 +44,11 @@ function App() {
 
   function handleEdit(id) {
     event.preventDefault();
-    // setItems((prevItems) => {
-    //   return prevItems.find((item, index) => {
-    //     return item.index === id;
-    //   });
-    // });
+    setEditId((prevItems) => {
+      return prevItems.find((item, index) => {
+        return index === id;
+      });
+    });
   }
 
   return (
@@ -70,15 +70,15 @@ function App() {
       <div>
         <form>
           <ul>
-            {items.map((todoItem, index) => (
+            {items.map((item, index) => (
               <Fragment>
-                {editId === todoItem.id ? (
+                {editId ? (
                   <EditableRow />
                 ) : (
                   <ToDoItem
                     key={index}
                     id={index}
-                    text={todoItem}
+                    text={item}
                     onDelete={deleteItem}
                     onEdit={handleEdit}
                   />
