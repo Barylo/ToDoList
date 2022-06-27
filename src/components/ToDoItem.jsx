@@ -1,13 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
+import EditableRow from "./EditableRow";
 
 function ToDoItem(props) {
+  const [isMarked, setIsMarked] = useState(false);
+
+  function handleMark() {
+    setIsMarked((prevValue) => {
+      return !prevValue;
+    });
+  }
+
   return (
-    <div
-      onClick={() => {
-        props.onChecked(props.id);
-      }}
-    >
-      <li>{props.text}</li>
+    <div className="form">
+      <li
+        onClick={handleMark}
+        style={{ textDecoration: isMarked ? "line-through" : "none" }}
+      >
+        {props.text}{" "}
+        <button className="btn" onClick={() => props.handleEdit(props.id)}>
+          Edit
+        </button>{" "}
+        <button
+          className="btn"
+          onClick={() => {
+            props.onDelete(props.id);
+          }}
+        >
+          Delete
+        </button>
+      </li>
     </div>
   );
 }

@@ -77,3 +77,14 @@ li {
   position: relative;
   padding: 0.5rem;
 }
+
+.btn {
+  padding: 2px;
+  font-family: "Architects Daughter", cursive;
+  text-decoration: none;
+  padding-bottom: 1px;
+  background-color: #ffeaa7;
+  padding: 0.25rem 0.4rem;
+  border-radius: 5px;
+  border: 1px solid hsl(198, 1%, 29%);
+}
