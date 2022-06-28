@@ -2,22 +2,27 @@ import React from "react";
 import { isPropertySignature } from "typescript";
 
 function EditableRow(id) {
-  function handleCancelClick() {}
+  function handleCancelClick() {
+    event.preventDefault();
+    // return setEditId(null);
+  }
 
-  function handleSaveEdited() {}
+  function handleSaveEdited() {
+    event.preventDefault();
+  }
 
   return (
     <div className="form">
       <form>
         <input
           type="text"
-          //   value={editId}
+          // value={editId}
           // onChange={handleEditFormChange}
         ></input>
-        <button type="submit" onClick={handleSaveEdited}>
+        <button type="submit" className="btn" onClick={handleSaveEdited}>
           Save
         </button>
-        <button type="button" onClick={handleCancelClick}>
+        <button type="button" className="btn" onClick={handleCancelClick}>
           Cancel
         </button>
       </form>

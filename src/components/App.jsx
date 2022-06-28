@@ -44,8 +44,8 @@ function App() {
 
   function handleEdit(id) {
     event.preventDefault();
-    setEditId((prevItems) => {
-      return prevItems.find((item, index) => {
+    setEditId((currentIdItem) => {
+      return items.find((item, index) => {
         return index === id;
       });
     });
@@ -72,7 +72,7 @@ function App() {
           <ul>
             {items.map((item, index) => (
               <Fragment>
-                {editId ? (
+                {editId === item ? (
                   <EditableRow />
                 ) : (
                   <ToDoItem
