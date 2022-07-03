@@ -5,14 +5,15 @@ import ToDoItem from "./ToDoItem";
 function App() {
   const [inputText, setInputText] = useState("");
   const [items, setItems] = useState([]);
-  // const [editFormData, setEditFormData] = useState("");
-  const [editId, setEditId] = useState(null);
+  const [editFormData, setEditFormData] = useState("");
+  const [todoEditing, setTodoEditing] = useState(null);
+  const [editingText, setEditingText] = useState("");
 
-  // function handleEditFormChange(event) {
-  //   event.preventDefault();
-  //   const fieldValue = event.target.value;
-  //   const newFormData = { ...prevItems, inputText };
-  // }
+  function handleSubmitFormChange(event) {
+    event.preventDefault();
+    const fieldValue = event.target.value;
+    const newFormData = { ...prevItems, inputText };
+  }
 
   function handleChange(event) {
     const newValue = event.target.value;
@@ -44,11 +45,24 @@ function App() {
 
   function handleEdit(id) {
     event.preventDefault();
-    setEditId((currentIdItem) => {
-      return items.find((item, index) => {
+    setTodoEditing((prevItems) => {
+      return prevItems.find((item, index) => {
         return index === id;
       });
     });
+  }
+
+  function handleCancelClick() {
+    event.preventDefault();
+    // return setEditId(null);
+  }
+
+  function handleSaveEdited() {
+    event.preventDefault();
+    setItems((prevItems) => {
+      return [...prevItems, editingText];
+    });
+    setEditingText("");
   }
 
   return (
@@ -72,8 +86,14 @@ function App() {
           <ul>
             {items.map((item, index) => (
               <Fragment>
-                {editId === item ? (
-                  <EditableRow />
+                {todoEditing === item ? (
+                  <EditableRow
+                    key={index}
+                    id={index}
+                    text={todoEditing}
+                    onCancelEdit={handleCancelClick}
+                    onSaveEdited={handleSaveEdited}
+                  />
                 ) : (
                   <ToDoItem
                     key={index}
