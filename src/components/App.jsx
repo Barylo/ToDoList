@@ -1,19 +1,14 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, useEffect } from "react";
 import EditableRow from "./EditableRow";
 import ToDoItem from "./ToDoItem";
+import useLocalStorage from "./useLocalStorage";
 
 function App() {
   const [inputText, setInputText] = useState("");
-  const [items, setItems] = useState([]);
-  // const [editFormData, setEditFormData] = useState("");
+  const [items, setItems] = useLocalStorage("items", []);
+
   const [todoEditing, setTodoEditing] = useState(null);
   const [editingText, setEditingText] = useState("");
-
-  // function handleSubmitFormChange(event) {
-  //   event.preventDefault();
-  //   const fieldValue = event.target.value;
-  //   const newFormData = { ...prevItems, inputText };
-  // }
 
   function handleChange(event) {
     const newValue = event.target.value;
@@ -43,9 +38,10 @@ function App() {
     return <input type="text" onKeyDown={handleKeyDown} />;
   }
 
-  function handleEdit(id) {
+  function handleEdit(id, item) {
     event.preventDefault();
     setTodoEditing(id);
+    setEditingText(item);
   }
 
   function handleCancelClick() {
@@ -53,11 +49,13 @@ function App() {
     setTodoEditing(null);
   }
 
-  function handleSaveEdited() {
-    setItems((prevItems) => {
-      return [...prevItems, editingText];
+  function handleSaveEdited(id) {
+    const newTodo = [...items].map((item) => {
+      if (item.id === id) {
+        item = editingText;
+      }
     });
-    setEditingText("");
+    setItems(newTodo);
     setTodoEditing(null);
   }
 
@@ -85,7 +83,7 @@ function App() {
                 <EditableRow
                   key={index}
                   id={index}
-                  text={todoEditing}
+                  text={item}
                   onCancelEdit={handleCancelClick}
                   onSaveEdited={handleSaveEdited}
                 />

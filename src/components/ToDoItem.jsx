@@ -19,7 +19,7 @@ function ToDoItem(props) {
         <button
           className="btn"
           onClick={() => {
-            props.onEdit(props.id);
+            props.onEdit(props.id, props.text);
           }}
         >
           Edit
