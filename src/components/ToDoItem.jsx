@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import EditableRow from "./EditableRow";
 
 function ToDoItem(props) {
   const [isMarked, setIsMarked] = useState(false);
