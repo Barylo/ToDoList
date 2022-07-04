@@ -15,6 +15,11 @@ function App() {
     setInputText(newValue);
   }
 
+  function handleChangeEditing(event) {
+    const newEdit = event.target.value;
+    setEditingText(newEdit);
+  }
+
   function addItem() {
     setItems((prevItems) => {
       return [...prevItems, inputText];
@@ -38,10 +43,10 @@ function App() {
     return <input type="text" onKeyDown={handleKeyDown} />;
   }
 
-  function handleEdit(id, item) {
+  function handleEdit(id, text) {
     event.preventDefault();
     setTodoEditing(id);
-    setEditingText(item);
+    setEditingText(text);
   }
 
   function handleCancelClick() {
@@ -84,6 +89,7 @@ function App() {
                   key={index}
                   id={index}
                   text={item}
+                  onChangeEditing={handleChangeEditing}
                   onCancelEdit={handleCancelClick}
                   onSaveEdited={handleSaveEdited}
                 />

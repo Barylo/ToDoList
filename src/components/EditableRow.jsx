@@ -5,7 +5,7 @@ function EditableRow(props) {
     <div className="form">
       <input
         type="text"
-        onChange={(e) => setEditingText(e.target.value)}
+        onChange={() => props.onChangeEditing(props.id)}
         value={props.text}
       />
       <button
