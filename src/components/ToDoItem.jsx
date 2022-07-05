@@ -3,7 +3,7 @@ import React, { useState } from "react";
 function ToDoItem(props) {
   const [isMarked, setIsMarked] = useState(false);
 
-  function handleMark() {
+  function handleMark(props) {
     setIsMarked((prevValue) => {
       return !prevValue;
     });

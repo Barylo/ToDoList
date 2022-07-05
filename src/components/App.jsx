@@ -10,6 +10,10 @@ function App() {
   const [todoEditing, setTodoEditing] = useState(null);
   const [editingText, setEditingText] = useState("");
 
+  const [countCreated, setCountCreated] = useLocalStorage("countCreated", 0);
+  const [countEdited, setCountEdited] = useLocalStorage("countEdited", 0);
+  const [countDeleted, setCountDeleted] = useLocalStorage("countDeleted", 0);
+
   function handleChange(event) {
     const newValue = event.target.value;
     setInputText(newValue);
@@ -19,7 +23,9 @@ function App() {
     setItems((prevItems) => {
       return [...prevItems, inputText];
     });
+
     setInputText("");
+    setCountCreated(countCreated + 1);
   }
 
   function deleteItem(id) {
@@ -29,6 +35,7 @@ function App() {
         return index !== id;
       });
     });
+    setCountDeleted(countDeleted + 1);
   }
 
   function handleKeyDown(event) {
@@ -56,6 +63,7 @@ function App() {
     setItems([...newArr, editingText]);
 
     setTodoEditing(null);
+    setCountEdited(countEdited + 1);
   }
 
   return (
@@ -63,9 +71,9 @@ function App() {
       <div className="heading">
         <h1>To-Do List with {items.length} tasks</h1>
       </div>
-      <p>{} ToDoes are completed</p>
-      <p>{} ToDoes are updated</p>
-      <p>{} ToDoes are deleted</p>
+      <p>{countCreated} ToDoes are created</p>
+      <p>{countEdited} ToDoes are updated</p>
+      <p>{countDeleted} ToDoes are deleted</p>
       <div className="form">
         <input
           onChange={handleChange}
