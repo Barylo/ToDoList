@@ -15,11 +15,6 @@ function App() {
     setInputText(newValue);
   }
 
-  function handleChangeEditing(event) {
-    const newEdit = event.target.value;
-    setEditingText(newEdit);
-  }
-
   function addItem() {
     setItems((prevItems) => {
       return [...prevItems, inputText];
@@ -55,12 +50,15 @@ function App() {
   }
 
   function handleSaveEdited(id) {
-    const newTodo = [...items].map((item) => {
-      if (item.id === id) {
-        item = editingText;
+    const editedTodo = prevItems.find((item, index) => {
+      if (index === id) {
+        item = input;
       }
     });
-    setItems(newTodo);
+    setItems((prevItems) => {
+      return [...prevItems, editedTodo];
+    });
+
     setTodoEditing(null);
   }
 
@@ -89,7 +87,6 @@ function App() {
                   key={index}
                   id={index}
                   text={item}
-                  onChangeEditing={handleChangeEditing}
                   onCancelEdit={handleCancelClick}
                   onSaveEdited={handleSaveEdited}
                 />
