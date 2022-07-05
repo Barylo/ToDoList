@@ -1,16 +1,13 @@
 import React, { useState } from "react";
 
 function EditableRow(props) {
-  const [input, setInput] = useState([props.text]);
-
-  function handleInputState(event) {
-    const newValue = event.target.value;
-    setInput(newValue);
-  }
-
   return (
     <div className="form">
-      <input type="text" onChange={handleInputState} value={input} />
+      <input
+        type="text"
+        onChange={(e) => props.setEditingText(e.target.value)}
+        value={props.editingText}
+      />
       <button className="btn" onClick={() => props.onSaveEdited(props.id)}>
         Save
       </button>

@@ -50,14 +50,10 @@ function App() {
   }
 
   function handleSaveEdited(id) {
-    const editedTodo = prevItems.find((item, index) => {
-      if (index === id) {
-        item = input;
-      }
+    const newArr = items.filter((item, index) => {
+      return index !== id;
     });
-    setItems((prevItems) => {
-      return [...prevItems, editedTodo];
-    });
+    setItems([...newArr, editingText]);
 
     setTodoEditing(null);
   }
@@ -65,8 +61,11 @@ function App() {
   return (
     <div className="container">
       <div className="heading">
-        <h1>To-Do List</h1>
+        <h1>To-Do List with {items.length} tasks</h1>
       </div>
+      <p>{} ToDoes are completed</p>
+      <p>{} ToDoes are updated</p>
+      <p>{} ToDoes are deleted</p>
       <div className="form">
         <input
           onChange={handleChange}
@@ -86,9 +85,10 @@ function App() {
                 <EditableRow
                   key={index}
                   id={index}
-                  text={item}
                   onCancelEdit={handleCancelClick}
                   onSaveEdited={handleSaveEdited}
+                  editingText={editingText}
+                  setEditingText={setEditingText}
                 />
               ) : (
                 <ToDoItem
