@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import EditableRow from "./EditableRow";
 import ToDoItem from "./ToDoItem";
 import useLocalStorage from "./useLocalStorage";
+import FetchData from "./FetchData";
 
 function App() {
   const [inputText, setInputText] = useState("");
@@ -29,7 +30,6 @@ function App() {
   }
 
   function deleteItem(id) {
-    event.preventDefault();
     setItems((prevItems) => {
       return prevItems.filter((item, index) => {
         return index !== id;
@@ -46,13 +46,11 @@ function App() {
   }
 
   function handleEdit(id, text) {
-    event.preventDefault();
     setTodoEditing(id);
     setEditingText(text);
   }
 
   function handleCancelClick() {
-    event.preventDefault();
     setTodoEditing(null);
   }
 
@@ -87,6 +85,7 @@ function App() {
       </div>
       <div>
         <form>
+          <FetchData />
           <ul>
             {items.map((item, index) =>
               todoEditing === index ? (
