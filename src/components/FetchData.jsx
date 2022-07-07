@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-function FetchData(props) {
+function FetchData() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {

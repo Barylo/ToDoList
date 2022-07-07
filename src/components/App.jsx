@@ -6,7 +6,7 @@ import FetchData from "./FetchData";
 
 function App() {
   const [inputText, setInputText] = useState("");
-  const [items, setItems] = useLocalStorage("items", []);
+  const [items, setItems] = useLocalStorage("", []);
 
   const [todoEditing, setTodoEditing] = useState(null);
   const [editingText, setEditingText] = useState("");
