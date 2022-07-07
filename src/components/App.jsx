@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import EditableRow from "./EditableRow";
 import ToDoItem from "./ToDoItem";
 import useLocalStorage from "./useLocalStorage";
-import FetchData from "./FetchData";
+import axios from "axios";
 
 function App() {
   const [inputText, setInputText] = useState("");
-  const [items, setItems] = useLocalStorage("", []);
+  const [items, setItems] = useLocalStorage("items", []);
 
   const [todoEditing, setTodoEditing] = useState(null);
   const [editingText, setEditingText] = useState("");
@@ -14,6 +14,29 @@ function App() {
   const [countCreated, setCountCreated] = useLocalStorage("countCreated", 0);
   const [countEdited, setCountEdited] = useLocalStorage("countEdited", 0);
   const [countDeleted, setCountDeleted] = useLocalStorage("countDeleted", 0);
+
+  // const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(
+        "https://gist.githubusercontent.com/alexandrtovmach/0c8a29b734075864727228c559fe9f96/raw/c4e4133c9658af4c4b3474475273b23b4a70b4af/todo-task.json"
+      )
+      .then((res) => {
+        // console.log(res);
+        const transformedData = res.data.map((post) => {
+          return post.text;
+        });
+        setItems(...items, transformedData);
+      })
+      .catch((err) => {
+        // console.log(err);
+      });
+  }, []);
+  // console.log(posts);
+  // setItems(...items, posts);
+
+  console.log(items);
 
   function handleChange(event) {
     const newValue = event.target.value;
@@ -85,7 +108,6 @@ function App() {
       </div>
       <div>
         <form>
-          <FetchData />
           <ul>
             {items.map((item, index) =>
               todoEditing === index ? (
