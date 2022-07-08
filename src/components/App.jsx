@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 
 function App() {
   const [inputText, setInputText] = useState("");
-  const [items, setItems] = useLocalStorage("items", []);
+  const [items, setItems] = useState([]);
 
   const [todoEditing, setTodoEditing] = useState(null);
   const [editingText, setEditingText] = useState("");
@@ -16,49 +16,42 @@ function App() {
   const [countEdited, setCountEdited] = useLocalStorage("countEdited", 0);
   const [countDeleted, setCountDeleted] = useLocalStorage("countDeleted", 0);
 
-  const [posts, setPosts] = useState([]);
-
   useEffect(() => {
     axios
       .get(
         "https://gist.githubusercontent.com/alexandrtovmach/0c8a29b734075864727228c559fe9f96/raw/c4e4133c9658af4c4b3474475273b23b4a70b4af/todo-task.json"
       )
       .then((res) => {
-        // console.log(res);
         const transformedData = res.data.map((post) => {
           return { id: uuidv4(), text: post.text };
         });
-        // setItems(...items, transformedData);
-        setPosts(transformedData);
+        setItems(...items, transformedData);
       })
-      .catch((err) => {
-        // console.log(err);
-      });
+      .catch((err) => {});
   }, []);
 
-  console.log(posts);
-  // setItems(...items, posts);
-
-  console.log(items);
-
   function handleChange(event) {
-    const newValue = {
-      id: uuidv4(),
-      text: event.target.value,
-    };
+    const newValue = event.target.value;
     setInputText(newValue);
   }
 
   function addItem() {
-    setItems((items) => {
-      return [...items, inputText];
+    setItems((prevItems) => {
+      const newTodo = [...prevItems];
+      newTodo.unshift({ id: uuidv4(), text: inputText });
+      return newTodo;
     });
+
     setInputText("");
     setCountCreated(countCreated + 1);
   }
 
   function deleteItem(id) {
-    setItems(items.filter((item) => item.id !== id));
+    setItems((prevItems) => {
+      const updatedItems = prevItems.filter((item) => item.id !== id);
+      return updatedItems;
+    });
+
     setCountDeleted(countDeleted + 1);
   }
 
@@ -79,8 +72,17 @@ function App() {
   }
 
   function handleSaveEdited(id) {
-    const newArr = items.filter((item) => item.id !== id);
-    setItems([...newArr, editingText]);
+    const editArr = (prevItems) => {
+      const updatedItems = prevItems.filter((item) => item.id !== id);
+      return updatedItems;
+    };
+    setItems(editArr);
+
+    setItems((editArr) => {
+      const editTodo = [...editArr];
+      editTodo.unshift({ id: uuidv4(), text: editingText });
+      return editTodo;
+    });
 
     setTodoEditing(null);
     setCountEdited(countEdited + 1);
@@ -99,7 +101,7 @@ function App() {
           onChange={handleChange}
           onKeyDown={handleKeyDown}
           type="text"
-          value={inputText.text}
+          value={inputText}
         />
         <button onClick={addItem}>
           <span>Add</span>
@@ -108,11 +110,11 @@ function App() {
       <div>
         <form>
           <ul>
-            {items.map((item, id) =>
+            {items.map((item) =>
               todoEditing === item.id ? (
                 <EditableRow
-                  key={id}
-                  id={id}
+                  key={item.id}
+                  id={item.id}
                   onCancelEdit={handleCancelClick}
                   onSaveEdited={handleSaveEdited}
                   editingText={editingText}
@@ -120,9 +122,9 @@ function App() {
                 />
               ) : (
                 <ToDoItem
-                  key={id}
-                  id={id}
-                  text={item}
+                  key={item.id}
+                  id={item.id}
+                  text={item.text}
                   onDelete={deleteItem}
                   onEdit={handleEdit}
                 />

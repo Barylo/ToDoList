@@ -7,6 +7,7 @@ function EditableRow(props) {
         type="text"
         onChange={(e) => props.setEditingText(e.target.value)}
         value={props.editingText}
+        id={props.id}
       />
       <button className="btn" onClick={() => props.onSaveEdited(props.id)}>
         Save
