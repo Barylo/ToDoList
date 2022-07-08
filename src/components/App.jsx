@@ -16,7 +16,7 @@ function App() {
   const [countEdited, setCountEdited] = useLocalStorage("countEdited", 0);
   const [countDeleted, setCountDeleted] = useLocalStorage("countDeleted", 0);
 
-  const [posts, setPosts] = useState([]);
+  // const [posts, setPosts] = useLocalStorage("posts", []);
 
   useEffect(() => {
     axios
@@ -27,7 +27,7 @@ function App() {
         const transformedData = res.data.map((post) => {
           return { id: uuidv4(), text: post.text };
         });
-        setPosts(transformedData);
+        setItems(transformedData);
       })
       .catch((err) => {});
   }, []);
