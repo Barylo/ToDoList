@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 
 function App() {
   const [inputText, setInputText] = useState("");
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useLocalStorage("items", []);
 
   const [todoEditing, setTodoEditing] = useState(null);
   const [editingText, setEditingText] = useState("");
@@ -15,6 +15,8 @@ function App() {
   const [countCreated, setCountCreated] = useLocalStorage("countCreated", 0);
   const [countEdited, setCountEdited] = useLocalStorage("countEdited", 0);
   const [countDeleted, setCountDeleted] = useLocalStorage("countDeleted", 0);
+
+  const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     axios
@@ -25,7 +27,7 @@ function App() {
         const transformedData = res.data.map((post) => {
           return { id: uuidv4(), text: post.text };
         });
-        setItems(...items, transformedData);
+        setPosts(transformedData);
       })
       .catch((err) => {});
   }, []);
