@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import EditableRow from "./EditableRow";
 import ToDoItem from "./ToDoItem";
 import useLocalStorage from "./useLocalStorage";
-// import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 
 function App() {
@@ -15,22 +14,6 @@ function App() {
   const [countCreated, setCountCreated] = useLocalStorage("countCreated", 0);
   const [countEdited, setCountEdited] = useLocalStorage("countEdited", 0);
   const [countDeleted, setCountDeleted] = useLocalStorage("countDeleted", 0);
-
-  // const [posts, setPosts] = useLocalStorage("posts", []);
-
-  // useEffect(() => {
-  //   axios
-  //     .get(
-  //       "https://gist.githubusercontent.com/alexandrtovmach/0c8a29b734075864727228c559fe9f96/raw/c4e4133c9658af4c4b3474475273b23b4a70b4af/todo-task.json"
-  //     )
-  //     .then((res) => {
-  //       const transformedData = res.data.map((post) => {
-  //         return { id: uuidv4(), text: post.text };
-  //       });
-  //       setItems(items.concat(transformedData));
-  //     })
-  //     .catch((err) => {});
-  // }, []);
 
   const fetchData = (e) => {
     e.preventDefault();
