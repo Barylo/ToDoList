@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import EditableRow from "./EditableRow";
 import ToDoItem from "./ToDoItem";
 import useLocalStorage from "./useLocalStorage";
-import axios from "axios";
+// import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 
 function App() {
@@ -18,19 +18,38 @@ function App() {
 
   // const [posts, setPosts] = useLocalStorage("posts", []);
 
-  useEffect(() => {
-    axios
-      .get(
-        "https://gist.githubusercontent.com/alexandrtovmach/0c8a29b734075864727228c559fe9f96/raw/c4e4133c9658af4c4b3474475273b23b4a70b4af/todo-task.json"
-      )
-      .then((res) => {
-        const transformedData = res.data.map((post) => {
-          return { id: uuidv4(), text: post.text };
-        });
-        setItems(transformedData);
-      })
-      .catch((err) => {});
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get(
+  //       "https://gist.githubusercontent.com/alexandrtovmach/0c8a29b734075864727228c559fe9f96/raw/c4e4133c9658af4c4b3474475273b23b4a70b4af/todo-task.json"
+  //     )
+  //     .then((res) => {
+  //       const transformedData = res.data.map((post) => {
+  //         return { id: uuidv4(), text: post.text };
+  //       });
+  //       setItems(items.concat(transformedData));
+  //     })
+  //     .catch((err) => {});
+  // }, []);
+
+  const fetchData = (e) => {
+    e.preventDefault();
+    let url =
+      "https://gist.githubusercontent.com/alexandrtovmach/0c8a29b734075864727228c559fe9f96/raw/c4e4133c9658af4c4b3474475273b23b4a70b4af/todo-task.json";
+    fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        setItems([
+          ...items,
+          ...data.map((item) => {
+            return {
+              text: item.text,
+              id: uuidv4(),
+            };
+          }),
+        ]);
+      });
+  };
 
   function handleChange(event) {
     const newValue = event.target.value;
@@ -107,6 +126,9 @@ function App() {
         />
         <button onClick={addItem}>
           <span>Add</span>
+        </button>
+        <button onClick={fetchData}>
+          <span>Get TodoList from outside data</span>
         </button>
       </div>
       <div>
