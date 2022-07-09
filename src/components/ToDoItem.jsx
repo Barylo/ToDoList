@@ -1,12 +1,29 @@
 import React, { useState } from "react";
 
-function ToDoItem(props) {
+function ToDoItem(
+  props,
+  { setTodoEditing, setEditingText, setItems, setCountDeleted, countDeleted }
+) {
   const [isMarked, setIsMarked] = useState(false);
 
-  function handleMark(props) {
+  function handleMark() {
     setIsMarked((prevValue) => {
       return !prevValue;
     });
+  }
+
+  function handleEdit(id, text) {
+    setTodoEditing(id);
+    setEditingText(text);
+  }
+
+  function deleteItem(id) {
+    setItems((prevItems) => {
+      const updatedItems = prevItems.filter((item) => item.id !== id);
+      return updatedItems;
+    });
+
+    setCountDeleted(countDeleted + 1);
   }
 
   return (
@@ -19,7 +36,7 @@ function ToDoItem(props) {
         <button
           className="btn"
           onClick={() => {
-            props.onEdit(props.id, props.text);
+            handleEdit(props.id, props.text);
           }}
         >
           Edit
@@ -27,7 +44,7 @@ function ToDoItem(props) {
         <button
           className="btn"
           onClick={() => {
-            props.onDelete(props.id);
+            deleteItem(props.id);
           }}
         >
           Delete
