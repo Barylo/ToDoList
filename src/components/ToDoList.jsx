@@ -25,8 +25,6 @@ export default function ToDoList({
               <EditableRow
                 key={item.id}
                 id={item.id}
-                onCancelEdit={handleCancelClick}
-                onSaveEdited={handleSaveEdited}
                 editingText={editingText}
                 setEditingText={setEditingText}
                 setItems={setItems}

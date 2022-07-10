@@ -1,17 +1,15 @@
 import React from "react";
 import { v4 as uuidv4 } from "uuid";
 
-function EditableRow(
-  props,
-  {
-    setTodoEditing,
-    setItems,
-    editingText,
-    setEditingText,
-    setCountEdited,
-    countEdited,
-  }
-) {
+function EditableRow({
+  setTodoEditing,
+  setItems,
+  editingText,
+  setEditingText,
+  setCountEdited,
+  countEdited,
+  id,
+}) {
   function handleCancelClick() {
     setTodoEditing(null);
   }
@@ -39,15 +37,15 @@ function EditableRow(
         type="text"
         onChange={(e) => setEditingText(e.target.value)}
         value={editingText}
-        id={props.id}
+        id={id}
       />
-      <button className="btn" onClick={() => handleSaveEdited(props.id)}>
+      <button className="btn" onClick={() => handleSaveEdited(id)}>
         Save
       </button>
       <button
         type="button"
         className="btn"
-        onClick={() => handleCancelClick(props.id)}
+        onClick={() => handleCancelClick(id)}
       >
         Cancel
       </button>

@@ -1,10 +1,14 @@
 import React from "react";
 import { v4 as uuidv4 } from "uuid";
 
-function ToDoInput(
-  props,
-  { items, setItems, setInputText, inputText, setCountCreated, countCreated }
-) {
+function ToDoInput({
+  items,
+  setItems,
+  setInputText,
+  inputText,
+  setCountCreated,
+  countCreated,
+}) {
   const fetchData = (e) => {
     e.preventDefault();
     let url =
