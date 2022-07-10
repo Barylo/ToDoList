@@ -88,3 +88,9 @@ li {
   border-radius: 5px;
   border: 1px solid hsl(198, 1%, 29%);
 }
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
