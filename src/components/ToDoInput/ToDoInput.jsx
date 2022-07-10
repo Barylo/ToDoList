@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import Button from "./UI/Button/Button";
+import Button from "../UI/Button/Button";
 import styled from "styled-components";
+import styles from "./ToDoInput.module.css";
+import Input from "../UI/Input/Input";
 
 const FormControl = styled.div`
   display: inline-block;
@@ -86,7 +88,7 @@ function ToDoInput({
     if (event.key === "Enter") {
       addItem();
     }
-    return <input type="text" onKeyDown={handleKeyDown} />;
+    return <Input type="text" onKeyDown={handleKeyDown} />;
   }
 
   function handleClearList() {
@@ -94,9 +96,9 @@ function ToDoInput({
   }
 
   return (
-    <div className="form">
+    <div className={styles.form}>
       <FormControl invalid={!isValid}>
-        <input
+        <Input
           onChange={handleChange}
           onKeyDown={handleKeyDown}
           type="text"
