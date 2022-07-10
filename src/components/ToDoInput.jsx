@@ -1,5 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import Button from "./UI/Button/Button";
+import styled from "styled-components";
+
+const FormControl = styled.div`
+  display: inline-block;
+  width: 100%;
+  border: 3px transparent #ccc;
+  font-family: "Architects Daughter", cursive;
+  line-height: 1rem;
+  padding: 0 0.25rem;
+
+  & input {
+    display: inline-block;
+    width: 70%;
+    border-radius: 5px;
+    font: inherit;
+    line-height: 2.5rem;
+    padding: 0 0.25rem;
+    border: 2px solid ${(props) => (props.invalid ? "red" : "transparent")};
+    background: ${(props) => (props.invalid ? "#ffd7d7" : "transparent")};
+    border-bottom: dashed 3px #fdcb6e;
+  }
+
+  & input:focus {
+    outline: none;
+    background: #fdcb6e;
+    border-color: #8b005d;
+  }
+`;
 
 function ToDoInput({
   items,
@@ -9,6 +38,8 @@ function ToDoInput({
   setCountCreated,
   countCreated,
 }) {
+  const [isValid, setIsValid] = useState(true);
+
   const fetchData = (e) => {
     e.preventDefault();
     let url =
@@ -29,11 +60,18 @@ function ToDoInput({
   };
 
   function handleChange(event) {
+    if (event.target.value.trim().length > 0) {
+      setIsValid(true);
+    }
     const newValue = event.target.value;
     setInputText(newValue);
   }
 
   function addItem() {
+    if (inputText.trim().length === 0) {
+      setIsValid(false);
+      return;
+    }
     setItems((prevItems) => {
       const newTodo = [...prevItems];
       newTodo.unshift({ id: uuidv4(), text: inputText });
@@ -51,20 +89,29 @@ function ToDoInput({
     return <input type="text" onKeyDown={handleKeyDown} />;
   }
 
+  function handleClearList() {
+    setItems([]);
+  }
+
   return (
     <div className="form">
-      <input
-        onChange={handleChange}
-        onKeyDown={handleKeyDown}
-        type="text"
-        value={inputText}
-      />
-      <button onClick={addItem}>
-        <span>Add</span>
-      </button>
-      <button onClick={fetchData}>
+      <FormControl invalid={!isValid}>
+        <input
+          onChange={handleChange}
+          onKeyDown={handleKeyDown}
+          type="text"
+          value={inputText}
+        />{" "}
+        <Button onClick={addItem}>
+          <span>Add</span>
+        </Button>
+      </FormControl>{" "}
+      <Button onClick={fetchData}>
         <span>Get TodoList from outside data</span>
-      </button>
+      </Button>{" "}
+      <Button onClick={handleClearList}>
+        <span>Clear To-do list</span>
+      </Button>
     </div>
   );
 }

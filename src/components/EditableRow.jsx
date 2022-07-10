@@ -1,5 +1,6 @@
 import React from "react";
 import { v4 as uuidv4 } from "uuid";
+import Button from "./UI/Button/Button";
 
 function EditableRow({
   setTodoEditing,
@@ -39,16 +40,10 @@ function EditableRow({
         value={editingText}
         id={id}
       />
-      <button className="btn" onClick={() => handleSaveEdited(id)}>
-        Save
-      </button>
-      <button
-        type="button"
-        className="btn"
-        onClick={() => handleCancelClick(id)}
-      >
+      <Button onClick={() => handleSaveEdited(id)}>Save</Button>{" "}
+      <Button type="button" onClick={() => handleCancelClick(id)}>
         Cancel
-      </button>
+      </Button>
     </div>
   );
 }

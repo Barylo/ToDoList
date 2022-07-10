@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Button from "./UI/Button/Button";
 
 function ToDoItem({
   setTodoEditing,
@@ -38,22 +39,20 @@ function ToDoItem({
         style={{ textDecoration: isMarked ? "line-through" : "none" }}
       >
         {text}{" "}
-        <button
-          className="btn"
+        <Button
           onClick={() => {
             handleEdit(id, text);
           }}
         >
           Edit
-        </button>{" "}
-        <button
-          className="btn"
+        </Button>{" "}
+        <Button
           onClick={() => {
             deleteItem(id);
           }}
         >
           Delete
-        </button>
+        </Button>
       </li>
     </div>
   );
