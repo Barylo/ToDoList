@@ -24,7 +24,7 @@ function EditableRow({
 
     setItems((editArr) => {
       const editTodo = [...editArr];
-      editTodo.unshift({ id: uuidv4(), text: editingText });
+      editTodo.unshift({ id: uuidv4(), text: editingText.slice(0, 24) });
       return editTodo;
     });
 

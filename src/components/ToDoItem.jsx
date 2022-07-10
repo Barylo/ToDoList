@@ -33,12 +33,16 @@ function ToDoItem({
   }
 
   return (
-    <div className="form">
-      <li
-        onClick={handleMark}
-        style={{ textDecoration: isMarked ? "line-through" : "none" }}
-      >
-        {text}{" "}
+    <div className="item">
+      <div>
+        <li
+          onClick={handleMark}
+          style={{ textDecoration: isMarked ? "line-through" : "none" }}
+        >
+          {text}{" "}
+        </li>
+      </div>
+      <div>
         <Button
           onClick={() => {
             handleEdit(id, text);
@@ -53,7 +57,7 @@ function ToDoItem({
         >
           Delete
         </Button>
-      </li>
+      </div>
     </div>
   );
 }

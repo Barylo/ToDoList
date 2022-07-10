@@ -51,7 +51,7 @@ function ToDoInput({
           ...items,
           ...data.map((item) => {
             return {
-              text: item.text,
+              text: item.text.slice(0, 24),
               id: uuidv4(),
             };
           }),
@@ -74,7 +74,7 @@ function ToDoInput({
     }
     setItems((prevItems) => {
       const newTodo = [...prevItems];
-      newTodo.unshift({ id: uuidv4(), text: inputText });
+      newTodo.unshift({ id: uuidv4(), text: inputText.slice(0, 24) });
       return newTodo;
     });
 
