@@ -1,5 +1,5 @@
 import React from "react";
-import ToDoItem from "./ToDoItem";
+import ToDoItem from "./ToDoItem/ToDoItem";
 import EditableRow from "./EditableRow";
 
 export default function ToDoList({

@@ -1,6 +1,7 @@
 import React from "react";
 import { v4 as uuidv4 } from "uuid";
 import Button from "./UI/Button/Button";
+import styles from "./ToDoInput/ToDoInput.module.css";
 
 function EditableRow({
   setTodoEditing,
@@ -33,13 +34,13 @@ function EditableRow({
   }
 
   return (
-    <div className="form">
+    <div className={styles.form}>
       <input
         type="text"
         onChange={(e) => setEditingText(e.target.value)}
         value={editingText}
         id={id}
-      />
+      />{" "}
       <Button onClick={() => handleSaveEdited(id)}>Save</Button>{" "}
       <Button type="button" onClick={() => handleCancelClick(id)}>
         Cancel

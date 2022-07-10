@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import ToDoInput from "./ToDoInput";
-import Counter from "./Counter";
-import Header from "./Header";
-import ToDoList from "./ToDoList";
-import useLocalStorage from "./useLocalStorage";
+import ToDoInput from "../ToDoInput/ToDoInput";
+import Counter from "../Counter";
+import Header from "../Header/Header";
+import ToDoList from "../ToDoList";
+import useLocalStorage from "../useLocalStorage";
+import "./App.css";
 
 function App() {
   const [inputText, setInputText] = useState("");

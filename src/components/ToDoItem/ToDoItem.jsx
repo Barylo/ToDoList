@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import Button from "./UI/Button/Button";
+import Button from "../UI/Button/Button";
+import "./ToDoItem.css";
 
 function ToDoItem({
   setTodoEditing,
