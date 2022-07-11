@@ -40,6 +40,7 @@ function App() {
         countDeleted={countDeleted}
         setTodoEditing={setTodoEditing}
       />
+
       <ToDoList
         items={items}
         setItems={setItems}

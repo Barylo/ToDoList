@@ -1,3 +1,11 @@
+.form2 {
+  margin-bottom: 20px;
+}
+
+.form3 {
+  margin-right: 10px;
+}
+
 .form input {
   box-sizing: border-box;
   background-color: transparent;

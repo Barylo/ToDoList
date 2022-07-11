@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Button from "../UI/Button/Button";
 import "./ToDoItem.css";
+import styles from "../ToDoInput/ToDoInput.module.css";
 
 function ToDoItem({
   setTodoEditing,
@@ -10,6 +11,7 @@ function ToDoItem({
   countDeleted,
   id,
   text,
+  backgroundColor,
 }) {
   const [isMarked, setIsMarked] = useState(false);
 
@@ -34,16 +36,23 @@ function ToDoItem({
   }
 
   return (
-    <div className="item">
+    <div
+      className="item"
+      style={{
+        backgroundColor: `${backgroundColor}`,
+      }}
+    >
       <div>
         <li
           onClick={handleMark}
-          style={{ textDecoration: isMarked ? "line-through" : "none" }}
+          style={{
+            textDecoration: isMarked ? "line-through" : "none",
+          }}
         >
           {text}{" "}
         </li>
       </div>
-      <div>
+      <div className={styles.form3}>
         <Button
           onClick={() => {
             handleEdit(id, text);
