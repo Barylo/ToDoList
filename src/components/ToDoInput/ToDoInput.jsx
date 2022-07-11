@@ -55,6 +55,9 @@ function ToDoInput({
             return {
               text: item.text.slice(0, 24),
               id: uuidv4(),
+              backgroundColor: `${
+                "#" + Math.floor(Math.random() * 16777215).toString(16)
+              }`,
             };
           }),
         ]);
@@ -76,7 +79,14 @@ function ToDoInput({
     }
     setItems((prevItems) => {
       const newTodo = [...prevItems];
-      newTodo.unshift({ id: uuidv4(), text: inputText.slice(0, 24) });
+      newTodo.unshift({
+        id: uuidv4(),
+        text: inputText.slice(0, 24),
+        backgroundColor: `${
+          "#" + Math.floor(Math.random() * 16777215).toString(16)
+        }`,
+      });
+
       return newTodo;
     });
 
@@ -108,12 +118,14 @@ function ToDoInput({
           <span>Add</span>
         </Button>
       </FormControl>{" "}
-      <Button onClick={fetchData}>
-        <span>Get TodoList from outside data</span>
-      </Button>{" "}
-      <Button onClick={handleClearList}>
-        <span>Clear To-do list</span>
-      </Button>
+      <div className={styles.form2}>
+        <Button onClick={fetchData}>
+          <span>Get TodoList from outside data</span>
+        </Button>{" "}
+        <Button onClick={handleClearList}>
+          <span>Clear To-do list</span>
+        </Button>
+      </div>
     </div>
   );
 }

@@ -25,7 +25,13 @@ function EditableRow({
 
     setItems((editArr) => {
       const editTodo = [...editArr];
-      editTodo.unshift({ id: uuidv4(), text: editingText.slice(0, 24) });
+      editTodo.unshift({
+        id: uuidv4(),
+        text: editingText.slice(0, 24),
+        backgroundColor: `${
+          "#" + Math.floor(Math.random() * 16777215).toString(16)
+        }`,
+      });
       return editTodo;
     });
 
