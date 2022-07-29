@@ -2,38 +2,32 @@ import React, { useState } from "react";
 import Button from "../UI/Button/Button";
 import "./ToDoItem.css";
 import styles from "../ToDoInput/ToDoInput.module.css";
+import { useSelector, useDispatch } from "react-redux";
 
-function ToDoItem({
-  setTodoEditing,
-  setEditingText,
-  setItems,
-  setCountDeleted,
-  countDeleted,
-  id,
-  text,
-  backgroundColor,
-}) {
-  const [isMarked, setIsMarked] = useState(false);
+function ToDoItem() {
+  const dispatch = useDispatch();
 
-  function handleMark() {
-    setIsMarked((prevValue) => {
-      return !prevValue;
-    });
-  }
+  // const [isMarked, setIsMarked] = useState(false);
 
-  function handleEdit(id, text) {
-    setTodoEditing(id);
-    setEditingText(text);
-  }
+  // function handleMark() {
+  //   setIsMarked((prevValue) => {
+  //     return !prevValue;
+  //   });
+  // }
 
-  function deleteItem(id) {
-    setItems((prevItems) => {
-      const updatedItems = prevItems.filter((item) => item.id !== id);
-      return updatedItems;
-    });
+  // function handleEdit(id, text) {
+  //   setTodoEditing(id);
+  //   setEditingText(text);
+  // }
 
-    setCountDeleted(countDeleted + 1);
-  }
+  // function deleteItem(id) {
+  //   setItems((prevItems) => {
+  //     const updatedItems = prevItems.filter((item) => item.id !== id);
+  //     return updatedItems;
+  //   });
+
+  //   setCountDeleted(countDeleted + 1);
+  // }
 
   return (
     <div
@@ -44,7 +38,7 @@ function ToDoItem({
     >
       <div>
         <li
-          onClick={handleMark}
+          onClick={() => dispatch(doDone(item.id))}
           style={{
             textDecoration: isMarked ? "line-through" : "none",
           }}
