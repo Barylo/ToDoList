@@ -1,12 +1,14 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
-function Counter({ countCreated, countEdited, countDeleted }) {
+function Counter() {
+  const tasks = useSelector((store) => store.tasks);
   return (
     <div>
       {" "}
-      <p>{countCreated} To-Does are created</p>
-      <p>{countEdited} To-Does are updated</p>
-      <p>{countDeleted} To-Does are deleted</p>
+      <p>{tasks.countCreated} To-Does are created</p>
+      <p>{tasks.countEdited} To-Does are updated</p>
+      <p>{tasks.countDeleted} To-Does are deleted</p>
     </div>
   );
 }

@@ -4,6 +4,8 @@ import Button from "../UI/Button/Button";
 import styled from "styled-components";
 import styles from "./ToDoInput.module.css";
 import Input from "../UI/Input/Input";
+import { useSelector, useDispatch } from "react-redux";
+import { addItem } from "../../store/reducers/tasks";
 
 const FormControl = styled.div`
   display: inline-block;
@@ -32,97 +34,61 @@ const FormControl = styled.div`
   }
 `;
 
-function ToDoInput({
-  items,
-  setItems,
-  setInputText,
-  inputText,
-  setCountCreated,
-  countCreated,
-}) {
-  const [isValid, setIsValid] = useState(true);
+function ToDoInput() {
+  // const [isValid, setIsValid] = useState(true);
+  const [inputText, setInputText] = useState("");
+  const dispatch = useDispatch();
+  const items = useSelector((store) => store.tasks.items);
 
-  const fetchData = (e) => {
-    e.preventDefault();
-    let url =
-      "https://gist.githubusercontent.com/alexandrtovmach/0c8a29b734075864727228c559fe9f96/raw/c4e4133c9658af4c4b3474475273b23b4a70b4af/todo-task.json";
-    fetch(url)
-      .then((response) => response.json())
-      .then((data) => {
-        setItems([
-          ...items,
-          ...data.map((item) => {
-            return {
-              text: item.text.slice(0, 24),
-              id: uuidv4(),
-              backgroundColor: `${
-                "#" + Math.floor(Math.random() * 16777215).toString(16)
-              }`,
-            };
-          }),
-        ]);
-      });
-  };
-
-  function handleChange(event) {
-    if (event.target.value.trim().length > 0) {
-      setIsValid(true);
-    }
-    const newValue = event.target.value;
-    setInputText(newValue);
-  }
-
-  function addItem() {
-    if (inputText.trim().length === 0) {
-      setIsValid(false);
-      return;
-    }
-    setItems((prevItems) => {
-      const newTodo = [...prevItems];
-      newTodo.unshift({
-        id: uuidv4(),
-        text: inputText.slice(0, 24),
-        backgroundColor: `${
-          "#" + Math.floor(Math.random() * 16777215).toString(16)
-        }`,
-      });
-
-      return newTodo;
-    });
-
-    setInputText("");
-    setCountCreated(countCreated + 1);
-  }
-
-  function handleKeyDown(event) {
-    if (event.key === "Enter") {
-      addItem();
-    }
-    return <Input type="text" onKeyDown={handleKeyDown} />;
-  }
-
-  function handleClearList() {
-    setItems([]);
-  }
+  // const fetchData = (e) => {
+  //   e.preventDefault();
+  //   let url =
+  //     "https://gist.githubusercontent.com/alexandrtovmach/0c8a29b734075864727228c559fe9f96/raw/c4e4133c9658af4c4b3474475273b23b4a70b4af/todo-task.json";
+  //   fetch(url)
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       dispatch(
+  //         addItem([
+  //           ...items,
+  //           ...data.map((item) => {
+  //             return {
+  //               text: item.text.slice(0, 24),
+  //               isDelete: false,
+  //               isImportant: false,
+  //               isDone: false,
+  //               id: uuidv4(),
+  //               backgroundColor: `${
+  //                 "#" + Math.floor(Math.random() * 16777215).toString(16)
+  //               }`,
+  //             };
+  //           }),
+  //         ])
+  //       );
+  //     });
+  // };
 
   return (
     <div className={styles.form}>
-      <FormControl invalid={!isValid}>
+      <FormControl>
         <Input
-          onChange={handleChange}
-          onKeyDown={handleKeyDown}
           type="text"
           value={inputText}
+          onChange={(e) => setInputText(e.target.value)}
         />{" "}
-        <Button onClick={addItem}>
+        <Button
+          onClick={() => {
+            dispatch(addItem(inputText));
+            setInputText("");
+          }}
+        >
           <span>Add</span>
         </Button>
       </FormControl>{" "}
       <div className={styles.form2}>
-        <Button onClick={fetchData}>
+        <Button>
           <span>Get TodoList from outside data</span>
         </Button>{" "}
-        <Button onClick={handleClearList}>
+        <Button>
           <span>Clear To-do list</span>
         </Button>
       </div>
@@ -131,3 +97,44 @@ function ToDoInput({
 }
 
 export default ToDoInput;
+
+// function handleChange(event) {
+//   if (event.target.value.trim().length > 0) {
+//     setIsValid(true);
+//   }
+//   const newValue = event.target.value;
+//   setInputText(newValue);
+// }
+
+// function addItem() {
+//   if (inputText.trim().length === 0) {
+//     setIsValid(false);
+//     return;
+//   }
+//   setItems((prevItems) => {
+//     const newTodo = [...prevItems];
+//     newTodo.unshift({
+//       id: uuidv4(),
+//       text: inputText.slice(0, 24),
+//       backgroundColor: `${
+//         "#" + Math.floor(Math.random() * 16777215).toString(16)
+//       }`,
+//     });
+
+//     return newTodo;
+//   });
+
+//   setInputText("");
+//   setCountCreated(countCreated + 1);
+// }
+
+// function handleKeyDown(event) {
+//   if (event.key === "Enter") {
+//     addItem();
+//   }
+//   return <Input type="text" onKeyDown={handleKeyDown} />;
+// }
+
+// function handleClearList() {
+//   setItems([]);
+// }
