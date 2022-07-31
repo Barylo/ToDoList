@@ -5,7 +5,7 @@ import styled from "styled-components";
 import styles from "./ToDoInput.module.css";
 import Input from "../UI/Input/Input";
 import { useSelector, useDispatch } from "react-redux";
-import { addItem } from "../../store/reducers/tasks";
+import { addItem, clearTodoList } from "../../store/reducers/tasks";
 
 const FormControl = styled.div`
   display: inline-block;
@@ -88,7 +88,11 @@ function ToDoInput() {
         <Button>
           <span>Get TodoList from outside data</span>
         </Button>{" "}
-        <Button>
+        <Button
+          onClick={() => {
+            dispatch(clearTodoList());
+          }}
+        >
           <span>Clear To-do list</span>
         </Button>
       </div>

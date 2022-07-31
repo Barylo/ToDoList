@@ -3,7 +3,7 @@ import ToDoInput from "../ToDoInput/ToDoInput";
 import Counter from "../Counter";
 import Header from "../Header/Header";
 import Modal from "react-modal";
-import ToDoItem from "../ToDoItem/ToDoItem";
+// import ToDoItem from "../ToDoItem/ToDoItem";
 import ToDoList from "../ToDoList";
 // import useLocalStorage from "../useLocalStorage";
 import "./App.css";

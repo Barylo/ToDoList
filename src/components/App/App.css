@@ -32,7 +32,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-radius: 7px;
+  border-radius: 10px;
   margin-top: 10px;
 }
 
@@ -40,4 +40,10 @@ li {
   text-align: left;
   position: relative;
   padding: 0.5rem;
+}
+
+.back {
+  border-radius: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
 }

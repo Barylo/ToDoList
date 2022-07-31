@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import Button from "./UI/Button/Button";
 import styles from "./ToDoInput/ToDoInput.module.css";
 import { useDispatch } from "react-redux";
-import { editItem } from "../store/reducers/tasks";
+import { cancelEditItem, editItem } from "../store/reducers/tasks";
 
 function EditableRow({ item }) {
   const dispatch = useDispatch();
@@ -20,9 +20,9 @@ function EditableRow({ item }) {
       <Button onClick={() => dispatch(editItem(item.id, editingText))}>
         Save
       </Button>{" "}
-      {/* <Button type="button" onClick={() => handleCancelClick(item.id)}>
+      <Button type="button" onClick={() => dispatch(cancelEditItem(item.id))}>
         Cancel
-      </Button> */}
+      </Button>
     </div>
   );
 }

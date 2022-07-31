@@ -6,6 +6,8 @@ const DELETE = "DELETE";
 const EDIT = "EDIT";
 const DONE = "DONE";
 const FETCH = "FETCH";
+const CANCEL = "CANCEL";
+const CLEAR = "CLEAR";
 
 const initialState = {
   items: [
@@ -63,6 +65,22 @@ export default (state = initialState, action) => {
         countEdited: state.countEdited + 1,
       };
     }
+    case CANCEL: {
+      return {
+        ...state,
+        items: state.items.map((item) => {
+          if (item.id === action.id) {
+            return {
+              ...item,
+              text: action.text || item.text,
+              isEdit: !item.isEdit,
+            };
+          }
+          return item;
+        }),
+        countEdited: state.countEdited - 1,
+      };
+    }
     case DELETE: {
       return {
         ...state,
@@ -82,23 +100,17 @@ export default (state = initialState, action) => {
         countDeleted: state.countDeleted + 1,
       };
     }
+    case CLEAR: {
+      return {
+        ...state,
+        items: [],
+      };
+    }
+
     case FETCH: {
       return {
         ...state,
-        items: [
-          ...state.items,
-          {
-            text: action.text,
-            isDelete: false,
-            isEdit: false,
-            isImportant: false,
-            isDone: false,
-            id: uuidv4(),
-            backgroundColor: `${
-              "#" + Math.floor(Math.random() * 16777215).toString(16)
-            }`,
-          },
-        ],
+        items: [...state.items],
         countCreated: state.countCreated + 1,
       };
     }
@@ -131,36 +143,44 @@ export const editItem = (id, text) => {
   };
 };
 
-// export const handleEdit = (id, text) => {
-//   return (dispatch) => {
-//     return dispatch({ type: EDIT, id });
-//   };
-// };
+export const cancelEditItem = (id, text) => {
+  return (dispatch) => {
+    return dispatch({ type: CANCEL, id, text });
+  };
+};
 
-// export const fetchData = () => {
-//   return (dispatch) => {
-//     axios.get(
-//       "https://gist.githubusercontent.com/alexandrtovmach/0c8a29b734075864727228c559fe9f96/raw/c4e4133c9658af4c4b3474475273b23b4a70b4af/todo-task.json"
-//         .then((response) => response.json())
-//         .then((data) => {
-//           dispatch(
-//             addItem([
-//               ...items,
-//               ...data.map((item) => {
-//                 return {
-//                   text: item.text.slice(0, 24),
-//                   isDelete: false,
-//                   isImportant: false,
-//                   isDone: false,
-//                   id: uuidv4(),
-//                   backgroundColor: `${
-//                     "#" + Math.floor(Math.random() * 16777215).toString(16)
-//                   }`,
-//                 };
-//               }),
-//             ])
-//           );
-//         })
-//     );
-//   };
-// };
+export const clearTodoList = () => {
+  return (dispatch) => {
+    return dispatch({ type: CLEAR });
+  };
+};
+
+export const fetchData = () => {
+  return (dispatch) => {
+    return dispatch({ type: FETCH });
+  };
+};
+
+// axios.get(
+//   "https://gist.githubusercontent.com/alexandrtovmach/0c8a29b734075864727228c559fe9f96/raw/c4e4133c9658af4c4b3474475273b23b4a70b4af/todo-task.json"
+//     .then((response) => response.json())
+//     .then((data) => {
+//       dispatch(
+//         addItem([
+//           ...items,
+//           ...data.map((item) => {
+//             return {
+//               text: item.text.slice(0, 24),
+//               isDelete: false,
+//               isImportant: false,
+//               isDone: false,
+//               id: uuidv4(),
+//               backgroundColor: `${
+//                 "#" + Math.floor(Math.random() * 16777215).toString(16)
+//               }`,
+//             };
+//           }),
+//         ])
+//       );
+//     })
+// );

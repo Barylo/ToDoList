@@ -1,6 +1,6 @@
 import React, { useState, Fragment } from "react";
 import Button from "../UI/Button/Button";
-import "./ToDoItem.css";
+
 import styles from "../ToDoInput/ToDoInput.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteItem, doDone, editItem } from "../../store/reducers/tasks";
@@ -11,12 +11,12 @@ function ToDoItem({ item }) {
 
   return (
     <div
-      className="item"
-      // style={{
-      //   backgroundColor: `${backgroundColor}`,
-      // }}
+      className="back"
+      style={{
+        backgroundColor: item.backgroundColor,
+      }}
     >
-      <form>
+      <div className="item">
         <li
           key={item.id}
           onClick={() => dispatch(doDone(item.id))}
@@ -25,6 +25,8 @@ function ToDoItem({ item }) {
           }}
         >
           {item.text}
+        </li>
+        <div>
           <Button
             onClick={() => {
               dispatch(editItem(item.id, item.text));
@@ -33,8 +35,8 @@ function ToDoItem({ item }) {
             Edit
           </Button>{" "}
           <Button onClick={() => dispatch(deleteItem(item.id))}>Delete</Button>
-        </li>
-      </form>
+        </div>
+      </div>
     </div>
   );
 }
