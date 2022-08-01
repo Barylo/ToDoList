@@ -4,7 +4,10 @@ import Button from "../UI/Button/Button";
 import styled from "styled-components";
 import styles from "./ToDoInput.module.css";
 import Input from "../UI/Input/Input";
-import { useDispatch } from "react-redux";
+import {
+  useDispatch,
+  //  useSelector
+} from "react-redux";
 import { addItem, clearTodoList } from "../../store/reducers/tasks";
 
 const FormControl = styled.div`
@@ -35,10 +38,18 @@ const FormControl = styled.div`
 `;
 
 function ToDoInput() {
-  // const [isValid, setIsValid] = useState(true);
+  const [isValid, setIsValid] = useState(true);
   const [inputText, setInputText] = useState("");
   const dispatch = useDispatch();
+
   // const items = useSelector((store) => store.tasks.items);
+
+  function handleKeyDown(event) {
+    if (event.key === "Enter") {
+      dispatch(addItem(inputText));
+    }
+    return <Input type="text" onKeyDown={handleKeyDown} />;
+  }
 
   // const fetchData = (e) => {
   //   e.preventDefault();
@@ -69,14 +80,19 @@ function ToDoInput() {
 
   return (
     <div className={styles.form}>
-      <FormControl>
+      <FormControl invalid={!isValid}>
         <Input
           type="text"
           value={inputText}
           onChange={(e) => setInputText(e.target.value)}
+          onKeyDown={handleKeyDown}
         />{" "}
         <Button
           onClick={() => {
+            if (inputText.trim().length === 0) {
+              setIsValid(false);
+              return;
+            }
             dispatch(addItem(inputText));
             setInputText("");
           }}
@@ -86,9 +102,7 @@ function ToDoInput() {
       </FormControl>{" "}
       <div className={styles.form2}>
         <Button
-        // onClick={() => {
-        //   dispatch(fetchData());
-        // }}
+        // onClick={fetchData}
         >
           <span>Get TodoList from outside data</span>
         </Button>{" "}
@@ -105,10 +119,3 @@ function ToDoInput() {
 }
 
 export default ToDoInput;
-
-// function handleKeyDown(event) {
-//   if (event.key === "Enter") {
-//     addItem();
-//   }
-//   return <Input type="text" onKeyDown={handleKeyDown} />;
-// }

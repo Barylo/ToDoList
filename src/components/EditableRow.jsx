@@ -9,6 +9,14 @@ function EditableRow({ item }) {
   const dispatch = useDispatch();
 
   const [editingText, setEditingText] = useState(item.text);
+
+  function handleKeyDown(event) {
+    if (event.key === "Enter") {
+      dispatch(saveEdit(item.id, editingText));
+    }
+    return <input type="text" onKeyDown={handleKeyDown} />;
+  }
+
   return (
     <div className={styles.form}>
       <input
@@ -16,6 +24,7 @@ function EditableRow({ item }) {
         onChange={(e) => setEditingText(e.target.value)}
         value={editingText}
         id={item.id}
+        onKeyDown={handleKeyDown}
       />{" "}
       <Button onClick={() => dispatch(saveEdit(item.id, editingText))}>
         Save
