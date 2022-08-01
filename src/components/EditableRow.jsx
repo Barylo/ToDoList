@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
+// import { v4 as uuidv4 } from "uuid";
 import Button from "./UI/Button/Button";
 import styles from "./ToDoInput/ToDoInput.module.css";
 import { useDispatch } from "react-redux";
-import { cancelEditItem, editItem } from "../store/reducers/tasks";
+import { cancelEditItem, saveEdit } from "../store/reducers/tasks";
 
 function EditableRow({ item }) {
   const dispatch = useDispatch();
@@ -17,7 +17,7 @@ function EditableRow({ item }) {
         value={editingText}
         id={item.id}
       />{" "}
-      <Button onClick={() => dispatch(editItem(item.id, editingText))}>
+      <Button onClick={() => dispatch(saveEdit(item.id, editingText))}>
         Save
       </Button>{" "}
       <Button type="button" onClick={() => dispatch(cancelEditItem(item.id))}>

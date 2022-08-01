@@ -1,13 +1,12 @@
-import React, { useState, Fragment } from "react";
+import React from "react";
 import Button from "../UI/Button/Button";
 
-import styles from "../ToDoInput/ToDoInput.module.css";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { deleteItem, doDone, editItem } from "../../store/reducers/tasks";
 
 function ToDoItem({ item }) {
   const dispatch = useDispatch();
-  const items = useSelector((store) => store.tasks.items);
+  // const items = useSelector((store) => store.tasks.items);
 
   return (
     <div

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
+// import { v4 as uuidv4 } from "uuid";
 import Button from "../UI/Button/Button";
 import styled from "styled-components";
 import styles from "./ToDoInput.module.css";
 import Input from "../UI/Input/Input";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addItem, clearTodoList } from "../../store/reducers/tasks";
 
 const FormControl = styled.div`
@@ -38,7 +38,7 @@ function ToDoInput() {
   // const [isValid, setIsValid] = useState(true);
   const [inputText, setInputText] = useState("");
   const dispatch = useDispatch();
-  const items = useSelector((store) => store.tasks.items);
+  // const items = useSelector((store) => store.tasks.items);
 
   // const fetchData = (e) => {
   //   e.preventDefault();
@@ -85,7 +85,11 @@ function ToDoInput() {
         </Button>
       </FormControl>{" "}
       <div className={styles.form2}>
-        <Button>
+        <Button
+        // onClick={() => {
+        //   dispatch(fetchData());
+        // }}
+        >
           <span>Get TodoList from outside data</span>
         </Button>{" "}
         <Button
@@ -102,43 +106,9 @@ function ToDoInput() {
 
 export default ToDoInput;
 
-// function handleChange(event) {
-//   if (event.target.value.trim().length > 0) {
-//     setIsValid(true);
-//   }
-//   const newValue = event.target.value;
-//   setInputText(newValue);
-// }
-
-// function addItem() {
-//   if (inputText.trim().length === 0) {
-//     setIsValid(false);
-//     return;
-//   }
-//   setItems((prevItems) => {
-//     const newTodo = [...prevItems];
-//     newTodo.unshift({
-//       id: uuidv4(),
-//       text: inputText.slice(0, 24),
-//       backgroundColor: `${
-//         "#" + Math.floor(Math.random() * 16777215).toString(16)
-//       }`,
-//     });
-
-//     return newTodo;
-//   });
-
-//   setInputText("");
-//   setCountCreated(countCreated + 1);
-// }
-
 // function handleKeyDown(event) {
 //   if (event.key === "Enter") {
 //     addItem();
 //   }
 //   return <Input type="text" onKeyDown={handleKeyDown} />;
-// }
-
-// function handleClearList() {
-//   setItems([]);
 // }

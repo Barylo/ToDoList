@@ -1,13 +1,14 @@
 import { v4 as uuidv4 } from "uuid";
-import axios from "axios";
+// import axios from "axios";
 
 const ADD = "ADD";
 const DELETE = "DELETE";
 const EDIT = "EDIT";
 const DONE = "DONE";
-const FETCH = "FETCH";
+// const FETCH = "FETCH";
 const CANCEL = "CANCEL";
 const CLEAR = "CLEAR";
+const SAVE_EDIT = "SAVE_EDIT";
 
 const initialState = {
   items: [
@@ -35,7 +36,7 @@ export default (state = initialState, action) => {
         items: [
           ...state.items,
           {
-            text: action.text,
+            text: action.text.slice(0, 24),
             isDelete: false,
             isEdit: false,
             isImportant: false,
@@ -50,6 +51,21 @@ export default (state = initialState, action) => {
       };
     }
     case EDIT: {
+      return {
+        ...state,
+        items: state.items.map((item) => {
+          if (item.id === action.id) {
+            return {
+              ...item,
+              text: action.text || item.text,
+              isEdit: !item.isEdit,
+            };
+          }
+          return item;
+        }),
+      };
+    }
+    case SAVE_EDIT: {
       return {
         ...state,
         items: state.items.map((item) => {
@@ -78,7 +94,6 @@ export default (state = initialState, action) => {
           }
           return item;
         }),
-        countEdited: state.countEdited - 1,
       };
     }
     case DELETE: {
@@ -107,13 +122,14 @@ export default (state = initialState, action) => {
       };
     }
 
-    case FETCH: {
-      return {
-        ...state,
-        items: [...state.items],
-        countCreated: state.countCreated + 1,
-      };
-    }
+    // case FETCH: {
+    //   return {
+    //     ...state,
+    //     items: [...state.items, fetchData()],
+    //     countCreated: state.countCreated + 1,
+    //   };
+    // }
+
     default:
       return state;
   }
@@ -143,6 +159,12 @@ export const editItem = (id, text) => {
   };
 };
 
+export const saveEdit = (id, text) => {
+  return (dispatch) => {
+    return dispatch({ type: SAVE_EDIT, id, text });
+  };
+};
+
 export const cancelEditItem = (id, text) => {
   return (dispatch) => {
     return dispatch({ type: CANCEL, id, text });
@@ -155,32 +177,56 @@ export const clearTodoList = () => {
   };
 };
 
-export const fetchData = () => {
-  return (dispatch) => {
-    return dispatch({ type: FETCH });
-  };
-};
+// export const fetchData = () => {
+//   return (dispatch) => {
+//     axios
+//       .get(
+//         "https://gist.githubusercontent.com/alexandrtovmach/0c8a29b734075864727228c559fe9f96/raw/c4e4133c9658af4c4b3474475273b23b4a70b4af/todo-task.json"
+//       )
+//       .then((response) => {
+//         const todos = response.data;
+//       })
+//       .catch((error) => {
+//         const errorMsg = error.message;
+//       });
+//   };
+// };
 
-// axios.get(
-//   "https://gist.githubusercontent.com/alexandrtovmach/0c8a29b734075864727228c559fe9f96/raw/c4e4133c9658af4c4b3474475273b23b4a70b4af/todo-task.json"
+// .then((data) => {
+//       data.map((item) => {
+//         return {
+//           text: item.text.slice(0, 24),
+//           isDelete: false,
+//           isEdit: false,
+//           isImportant: false,
+//           isDone: false,
+//           id: uuidv4(),
+//           backgroundColor: `${
+//             "#" + Math.floor(Math.random() * 16777215).toString(16)
+//           }`,
+//         };
+//   };
+// };
+
+// const fetched = (e) => {
+//   e.preventDefault();
+//   let url =
+//     "https://gist.githubusercontent.com/alexandrtovmach/0c8a29b734075864727228c559fe9f96/raw/c4e4133c9658af4c4b3474475273b23b4a70b4af/todo-task.json";
+//   fetch(url)
 //     .then((response) => response.json())
 //     .then((data) => {
-//       dispatch(
-//         addItem([
-//           ...items,
-//           ...data.map((item) => {
-//             return {
-//               text: item.text.slice(0, 24),
-//               isDelete: false,
-//               isImportant: false,
-//               isDone: false,
-//               id: uuidv4(),
-//               backgroundColor: `${
-//                 "#" + Math.floor(Math.random() * 16777215).toString(16)
-//               }`,
-//             };
-//           }),
-//         ])
-//       );
-//     })
-// );
+//       data.map((item) => {
+//         return {
+//           text: item.text.slice(0, 24),
+//           isDelete: false,
+//           isEdit: false,
+//           isImportant: false,
+//           isDone: false,
+//           id: uuidv4(),
+//           backgroundColor: `${
+//             "#" + Math.floor(Math.random() * 16777215).toString(16)
+//           }`,
+//         };
+//       });
+//     });
+// };
