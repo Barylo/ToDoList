@@ -6,9 +6,10 @@ import styles from "./ToDoInput.module.css";
 import Input from "../UI/Input/Input";
 import {
   useDispatch,
-  //  useSelector
+  // useSelector
 } from "react-redux";
-import { addItem, clearTodoList } from "../../store/reducers/tasks";
+import { addItem, clearTodoList, fetchData } from "../../store/reducers/tasks";
+// import { fetchData } from "../fetchData";
 
 const FormControl = styled.div`
   display: inline-block;
@@ -58,23 +59,25 @@ function ToDoInput() {
   //   fetch(url)
   //     .then((response) => response.json())
   //     .then((data) => {
-  //       dispatch(
-  //         addItem([
-  //           ...items,
-  //           ...data.map((item) => {
-  //             return {
-  //               text: item.text.slice(0, 24),
-  //               isDelete: false,
-  //               isImportant: false,
-  //               isDone: false,
-  //               id: uuidv4(),
-  //               backgroundColor: `${
-  //                 "#" + Math.floor(Math.random() * 16777215).toString(16)
-  //               }`,
-  //             };
-  //           }),
-  //         ])
-  //       );
+  //       () => {
+  //         dispatch(
+  //           addItem([
+  //             ...items,
+  //             ...data.map((item) => {
+  //               return {
+  //                 text: item.text.slice(0, 24),
+  //                 isDelete: false,
+  //                 isImportant: false,
+  //                 isDone: false,
+  //                 id: uuidv4(),
+  //                 backgroundColor: `${
+  //                   "#" + Math.floor(Math.random() * 16777215).toString(16)
+  //                 }`,
+  //               };
+  //             }),
+  //           ])
+  //         );
+  //       };
   //     });
   // };
 
@@ -102,7 +105,10 @@ function ToDoInput() {
       </FormControl>{" "}
       <div className={styles.form2}>
         <Button
-        // onClick={fetchData}
+          //  onClick={fetchData}
+          onClick={() => {
+            dispatch(fetchData());
+          }}
         >
           <span>Get TodoList from outside data</span>
         </Button>{" "}
